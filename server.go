@@ -4,17 +4,23 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
 
-	router := mux.NewRouter()
+	r := mux.NewRouter()
+	r.HandleFunc("/login/", Login).Methods("POST", "OPTIONS")
+	// r.HandleFunc("/okay", PrintOkay).Methods("GET", "OPTIONS")
+	port := os.Getenv("PORT")
 
-	router.HandleFunc("/login/", Login).Methods("POST")
-
-	log.Fatal(http.ListenAndServe(":8000", router))
+	if port == "" {
+		port = "8080"
+	}
+	log.Println("Server running on port : ", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 
 }
 
