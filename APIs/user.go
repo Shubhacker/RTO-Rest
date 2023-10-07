@@ -48,7 +48,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// return &response, err
 	}
-	user.JWT = *JWT
+	log.Println(*JWT)
+	userData.JWT = *JWT
 
 	responseData.Message = msg
 	responseData.UserInfo = userData
