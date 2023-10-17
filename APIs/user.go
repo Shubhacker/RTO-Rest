@@ -98,3 +98,28 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 	log.Println("Create request API successfully completed in " + time.Since(now).String())
 	json.NewEncoder(w).Encode(test)
 }
+
+func SignUpUser(w http.ResponseWriter, r *http.Request) {
+	now := time.Now()
+	msg := "User Created successfully"
+	var request structs.UserRequest
+
+	request.UserName = r.FormValue("UserName")
+	request.FirstName = r.FormValue("FirstName")
+	request.LastName = r.FormValue("LastName")
+	request.Email = r.FormValue("Email")
+	request.Password = r.FormValue("Password")
+
+	pass, err := logic.Encrypt(request.Password)
+	if err != nil {
+		log.Println(err.Error(), " <- Error")
+	}
+
+	err2 := database.Upsertuser(request, pass)
+	if err2 != nil {
+		log.Println(err.Error(), "<- Error")
+	}
+
+	json.NewEncoder(w).Encode(msg)
+	log.Println("SignUp API called completed in : ", time.Since(now))
+}

@@ -29,3 +29,11 @@ type UserInfo struct {
 	Email     string
 	Password  string
 }
+
+type UserRequest struct {
+	UserName  string
+	FirstName string
+	LastName  string
+	Email     string
+	Password  string
+}
