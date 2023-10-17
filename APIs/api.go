@@ -7,5 +7,6 @@ func Apis() *mux.Router {
 	r.HandleFunc("/login/", Login).Methods("POST", "OPTIONS")
 	r.HandleFunc("/createrequest/", CreateRequest).Methods("POST", "OPTIONS")
 	r.HandleFunc("/signUp/", SignUpUser).Methods("POST", "OPTIONS")
+	r.HandleFunc("/social/", SocialFetch).Methods("GET", "OPTIONS")
 	return r
 }
