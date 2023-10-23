@@ -56,7 +56,7 @@ func FetchComments(requestId string) ([]structs.CommentData, error) {
 
 	query := `select report_id, "comment", comment_by, report_likes, report_dislike, created_at from report.report_comment where report_id = $1`
 
-	rows, err := DB.Query(query)
+	rows, err := DB.Query(query, requestId)
 	if err != nil {
 		return nil, err
 	}
