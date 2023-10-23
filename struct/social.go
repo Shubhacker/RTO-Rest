@@ -1,5 +1,9 @@
 package structs
 
+type SocialResponse struct {
+	Social []SocialData
+}
+
 type SocialData struct {
 	RequestId      string
 	ImageUrls      string

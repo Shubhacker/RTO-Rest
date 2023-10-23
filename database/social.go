@@ -5,15 +5,17 @@ import (
 	structs "rto/struct"
 )
 
-func FetchSocialFromDB(requestBy string) ([]structs.SocialData, []string, error) {
+func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.SocialData, []string, error) {
 	var response []structs.SocialData
+	var responseD structs.SocialResponse
+
 	var requestIdSlice []string
 	query := `select report_id ,image_urls ,"location" ,offense ,is_submitted_by_rto ,total_fine ,rto_approved from report.public_report order by RANDOM() limit 10;`
 
 	rows, err := DB.Query(query)
 	if err != nil {
 		log.Println("Issue (FetchSocialFromDB) : ", err.Error())
-		return response, requestIdSlice, err
+		return responseD, response, requestIdSlice, err
 	}
 	for rows.Next() {
 		var DBdata structs.SocialData
@@ -29,8 +31,8 @@ func FetchSocialFromDB(requestBy string) ([]structs.SocialData, []string, error)
 		response = append(response, DBdata)
 		requestIdSlice = append(requestIdSlice, DBdata.RequestId)
 	}
-
-	return response, requestIdSlice, nil
+	responseD.Social = response
+	return responseD, response, requestIdSlice, nil
 }
 
 func AddComment(data structs.AddComment) error {
