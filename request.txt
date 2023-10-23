@@ -1,0 +1,14 @@
+AddComment :
+http://localhost:8080/AddComment/?RequestId=1c487ecd-ad8b-44aa-aa89-e869c7b82cc3&CommentBy=Me&Comment=TestComment 
+
+Fetch Social :
+https://tawdry-books-test.up.railway.app/social/
+
+SignUp user :
+https://tawdry-books-test.up.railway.app/signUp/?UserName=UName2&FirstName=FName2&LastName=LName2&Email=Email@teste.com&Password=pass1.1
+
+CreateRequest :
+https://tawdry-books-test.up.railway.app/createrequest/?ByRto=true&Comment=Fuck offf seventh&ImageURL=www.huyah.com/testoftests6&Locations=1234.5678.1209&Offense=1. black Thar, 2. Drunk and drugged&ReportedBy=reporter 5&Social=False&VehicleNumber=MH16CY1237
+
+Login :
+https://tawdry-books-test.up.railway.app/login/?username=devUserName2&password=pass2
