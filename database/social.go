@@ -71,6 +71,7 @@ func FetchComments(requestId string) ([]structs.CommentData, error) {
 			&comment.ReportDisLikes,
 			&comment.CreatedAt,
 		)
+		commentData = append(commentData, comment)
 	}
 
 	return commentData, nil
