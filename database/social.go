@@ -32,3 +32,44 @@ func FetchSocialFromDB(requestBy string) ([]structs.SocialData, []string, error)
 
 	return response, requestIdSlice, nil
 }
+
+func AddComment(data structs.AddComment) error {
+	var inputArgs []interface{}
+	var reportId string
+	query := `insert into report.report_comment (report_id, "comment", comment_by) values ($1, $2, $3) returning report_id`
+	inputArgs = append(inputArgs, data.RequestId)
+	inputArgs = append(inputArgs, data.Comment)
+	inputArgs = append(inputArgs, data.CommentBy)
+
+	err2 := DB.QueryRow(query, inputArgs...).Scan(&reportId)
+	if err2 != nil {
+		return err2
+	}
+
+	return nil
+}
+
+func FetchComments(requestId string) ([]structs.CommentData, error) {
+	var commentData []structs.CommentData
+
+	query := `select report_id, "comment", comment_by, report_likes, report_dislike, created_at from report.report_comment where report_id = $1`
+
+	rows, err := DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var comment structs.CommentData
+		rows.Scan(
+			&comment.ReportId,
+			&comment.Comment,
+			&comment.CommentBy,
+			&comment.ReportLikes,
+			&comment.ReportDisLikes,
+			&comment.CreatedAt,
+		)
+	}
+
+	return commentData, nil
+}
