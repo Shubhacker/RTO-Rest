@@ -12,12 +12,12 @@ import (
 func SocialFetch(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 
-	data, _, err := database.FetchSocialFromDB("")
+	data2, _, _, err := database.FetchSocialFromDB("")
 	if err != nil {
 		log.Println(err.Error(), " <- Error")
 	}
 
-	json.NewEncoder(w).Encode(data)
+	json.NewEncoder(w).Encode(data2)
 
 	log.Println("Social API call : ", time.Since(now))
 }
