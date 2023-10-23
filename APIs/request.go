@@ -26,13 +26,15 @@ func FetchComments(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 
 	RequestId := r.FormValue("RequestId")
+	var commentRes structs.CommentResponse
 
 	commentData, err := database.FetchComments(RequestId)
 	if err != nil {
 		log.Println(err.Error(), " <- Error returned from DB")
 	}
+	commentRes.Comments = commentData
 
-	json.NewEncoder(w).Encode(commentData)
+	json.NewEncoder(w).Encode(commentRes)
 
 	log.Println("FetchComments API call : ", time.Since(now))
 }
