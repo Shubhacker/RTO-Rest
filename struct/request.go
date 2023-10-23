@@ -14,3 +14,7 @@ type CommentData struct {
 	ReportDisLikes int
 	CreatedAt      string
 }
+
+type CommentResponse struct {
+	Comments []CommentData
+}
