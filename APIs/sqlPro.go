@@ -23,6 +23,6 @@ func Mergequery(w http.ResponseWriter, r *http.Request) {
 	sqlval := sqlx.Rebind(sqlx.DOLLAR, sql)
 	que := logic.ReplaceDollarWithData(sqlval, slice)
 	log.Println(que, "<- query replace $")
-	log.Println(time.Since(now), " <- Time took to provide responce")
+	log.Println(time.Since(now), " <- Time took to provide  responce")
 	json.NewEncoder(w).Encode(que)
 }
