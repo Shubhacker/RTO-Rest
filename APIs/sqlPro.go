@@ -18,9 +18,11 @@ func Mergequery(w http.ResponseWriter, r *http.Request) {
 
 	//converting inputargs from string to slice
 	slice := strings.Fields(inputArgs)
+	log.Println(inputArgs, " <= InputArgs converted")
 
 	// converting ? to $ for checking number of input parameter required
 	sqlval := sqlx.Rebind(sqlx.DOLLAR, sql)
+	log.Println(sqlval, "Converted to $")
 	que := logic.ReplaceDollarWithData(sqlval, slice)
 	log.Println(que, "<- query replace $")
 	log.Println(time.Since(now), " <- Time took to provide  responce")
