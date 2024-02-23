@@ -12,10 +12,10 @@ var DB *sql.DB
 var err error
 
 const (
-	HOST     = "containers-us-west-176.railway.app"
-	PORT     = 5913
+	HOST     = "monorail.proxy.rlwy.net"
+	PORT     = 51633
 	USER     = "postgres"
-	PASSWORD = "S2SrkFGkTXyH2TxPMD57"
+	PASSWORD = "D4g4AbaAB3F6Cbc4ADgAf33bF31FcDaf"
 	DBNAME   = "railway"
 )
 
