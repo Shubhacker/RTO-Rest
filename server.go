@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-
+	log.Println("Starting Server")
 	database.ConnectDB()
 	r := apis.Apis()
 	port := os.Getenv("PORT")
