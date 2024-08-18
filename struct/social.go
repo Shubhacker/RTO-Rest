@@ -12,4 +12,5 @@ type SocialData struct {
 	SubmittedByRTO bool
 	TotalFine      int
 	RTOApproved    bool
+	Submitted_at string
 }

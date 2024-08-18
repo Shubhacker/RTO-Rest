@@ -12,3 +12,7 @@ https://tawdry-books-test.up.railway.app/createrequest/?ByRto=true&Comment=Fuck 
 
 Login :
 https://tawdry-books-test.up.railway.app/login/?username=devUserName2&password=pass2
+
+
+getMyRequest : 
+http://localhost:8080/getMyRequest/?submittedBy=User1

@@ -10,7 +10,29 @@ func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.Soci
 	var responseD structs.SocialResponse
 
 	var requestIdSlice []string
-	query := `select report_id ,image_urls ,"location" ,offense ,is_submitted_by_rto ,total_fine ,rto_approved from report.public_report order by RANDOM() limit 10;`
+	query := `select
+				report_id ,
+				image_urls ,
+				"location" ,
+				offense ,
+				is_submitted_by_rto ,
+				total_fine ,
+				rto_approved,
+				submitted_at
+			from
+				report.public_report` 
+
+			if requestBy != ""{
+				query += ` where 
+				reported_by = '`+requestBy+`'`
+			}
+
+
+			query += ` order by
+				RANDOM()
+				limit 10;`
+
+				log.Println(query)
 
 	rows, err := DB.Query(query)
 	if err != nil {
@@ -27,6 +49,7 @@ func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.Soci
 			&DBdata.SubmittedByRTO,
 			&DBdata.TotalFine,
 			&DBdata.RTOApproved,
+			&DBdata.Submitted_at,
 		)
 		response = append(response, DBdata)
 		requestIdSlice = append(requestIdSlice, DBdata.RequestId)

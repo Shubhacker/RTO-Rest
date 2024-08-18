@@ -22,6 +22,20 @@ func SocialFetch(w http.ResponseWriter, r *http.Request) {
 	log.Println("Social API call : ", time.Since(now))
 }
 
+func FetchMyRequest(w http.ResponseWriter, r *http.Request){
+	log.Println("FetchMyRequest Called")
+	now := time.Now()
+	submittedBy := r.FormValue("submittedBy")
+	data2, _, _, err := database.FetchSocialFromDB(submittedBy)
+	if err != nil {
+		log.Println(err.Error(), " <- Error")
+	}
+
+	json.NewEncoder(w).Encode(data2)
+
+	log.Println("FetchMyRequest API call : ", time.Since(now))
+}
+
 func FetchComments(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 
