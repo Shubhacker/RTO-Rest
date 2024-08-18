@@ -89,6 +89,9 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 
 	requestData.TotalFine = 100
 
+	log.Println("<- Create request payload ->")
+	log.Println(requestData)
+
 	reportId, err := database.SubmitReport(requestData, ByRTO, Social)
 	if err != nil {
 		test = "Failed to create request please try again later !"
