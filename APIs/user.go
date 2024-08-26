@@ -68,7 +68,7 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 	test = "Report submitted successfully"
 	var ByRTO, Social bool
 	var requestData structs.Report
-
+	go database.Logs("offense form value", r.FormValue("Offense"))
 	requestData.ReportId = uuid.New().String()
 	requestData.RTOApproved = r.FormValue("ByRto")
 	requestData.Comments = r.FormValue("Comment")
@@ -78,6 +78,7 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 	requestData.ReportedBy = r.FormValue("ReportedBy")
 	requestData.Social = r.FormValue("Social")
 	requestData.VehicleNumber = r.FormValue("VehicleNumber")
+	go database.Logs("offense val", requestData.Offense)
 
 	if requestData.RTOApproved == "True" {
 		ByRTO = true
@@ -89,16 +90,13 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 
 	requestData.TotalFine = 100
 
-	log.Println("<- Create request payload ->")
-	log.Println(requestData)
-
 	reportId, err := database.SubmitReport(requestData, ByRTO, Social)
 	if err != nil {
 		test = "Failed to create request please try again later !"
 	}
-
 	test += " : " + reportId
-	log.Println("Create request API successfully completed in " + time.Since(now).String())
+	l1 := "Create request API successfully completed in " + time.Since(now).String()
+	go database.Logs("Debug", l1)
 	json.NewEncoder(w).Encode(test)
 }
 

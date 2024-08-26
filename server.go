@@ -17,7 +17,8 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	log.Println("Server running on port : ", port)
+	l1 := "Server running on port : " + port
+	log.Println(l1)
+	go database.Logs("serverStarting", l1)
 	log.Fatal(http.ListenAndServe(":"+port, r))
-
 }
