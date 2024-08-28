@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"rto/database"
 	"rto/logic"
+	"strings"
 	structs "rto/struct"
 	"time"
 
@@ -65,6 +66,7 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 	log.Println("Create request API called")
 	now := time.Now()
 	var test string
+	var response structs.ReportResopnse
 	test = "Report submitted successfully"
 	var ByRTO, Social bool
 	var requestData structs.Report
@@ -88,16 +90,54 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 		Social = true
 	}
 
-	requestData.TotalFine = 100
+	offenceSlice := formatSlice(requestData.Offense)
+	requestData.TotalFine = checkFineForOffence(offenceSlice)
+
+	log.Println(requestData.TotalFine, "<- Fined for ")
 
 	reportId, err := database.SubmitReport(requestData, ByRTO, Social)
 	if err != nil {
 		test = "Failed to create request please try again later !"
+		go database.Logs("Debug", test)
 	}
-	test += " : " + reportId
+	response.RequestId = reportId
+	response.TotalFine = requestData.TotalFine
 	l1 := "Create request API successfully completed in " + time.Since(now).String()
 	go database.Logs("Debug", l1)
-	json.NewEncoder(w).Encode(test)
+	json.NewEncoder(w).Encode(response)
+}
+
+func checkFineForOffence(offence []string)int{
+	fine := make(map[string]int)
+	fine["Overspeeding"] = 5000
+	fine["Drink and drive offence"] = 10000
+	fine["Riding without wearing a helmet (rider/pillion rider)"] = 1000
+	fine["Driving without wearing a seatbelt"] = 1000
+	fine["Using a mobile phone while driving/riding"] = 5000
+	fine["Overloading of two-wheeler (triple riding)"] = 1000
+	fine["Offence related to air/noise pollution"] = 1000
+	fine["Driving/riding without number plate"] = 500
+	fine["Minor riding or driving a vehicle"] = 25000
+	fine["Lane discipline offences"] = 500
+	fine["No-parking offences"] = 500
+	fine["One way offence"] = 500
+	fine["Offence related to alteration of vehicle"] = 5000
+
+	var	totalFine int
+	for _, o := range offence {
+		totalFine += fine[o]
+	}
+
+	return totalFine
+}
+
+func formatSlice(offence string)[]string{
+	l1 := strings.Trim(offence, "[")
+	l2 := strings.Trim(l1, "]")
+	l3 := strings.Replace(l2, `"`, "", -1)
+	k := strings.Split(l3, ",")
+
+	return k
 }
 
 func SignUpUser(w http.ResponseWriter, r *http.Request) {

@@ -24,3 +24,8 @@ type Report struct {
 	ReportedBy     string
 	VehicleNumber  string
 }
+
+type ReportResopnse struct{
+	RequestId string
+	TotalFine int
+}
