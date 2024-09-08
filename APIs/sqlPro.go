@@ -11,6 +11,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// Not belong to these project
 func Mergequery(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	sql := r.FormValue("query")

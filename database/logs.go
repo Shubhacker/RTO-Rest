@@ -4,6 +4,7 @@ import (
 	"log"
 )
 
+// For now added all logs in DB later will use proper logger
 func Logs(logType, message string) error {
 	var inputArgs []interface{}
 	var reportId string

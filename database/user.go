@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Not using any function from below
 func FetchUserInfo(username string) (structs.User, error) {
 	var user structs.User
 

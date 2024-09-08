@@ -9,12 +9,14 @@ func Apis() *mux.Router {
 	r.HandleFunc("/signUp/", SignUpUser).Methods("POST", "OPTIONS")
 	r.HandleFunc("/social/", SocialFetch).Methods("GET", "OPTIONS")
 	r.HandleFunc("/getMyRequest/", FetchMyRequest).Methods("GET", "OPTIONS")
-	// Implementing
-	r.HandleFunc("/", FetchComments).Methods("GET", "OPTIONS")
-	// To implement
 	r.HandleFunc("/FetchComments/", FetchComments).Methods("GET", "OPTIONS")
 	r.HandleFunc("/AddComment/", AddComment).Methods("GET", "OPTIONS")
-	r.HandleFunc("/LikeDislikeComment/", LikeDislikeComment).Methods("GET", "OPTIONS")
+	r.HandleFunc("/LikeDislikeComment/", AddLikesDisLikes).Methods("POST", "OPTIONS")
+	// Implementing
+
+	// To implement
+
+	// Not belong to these project
 	r.HandleFunc("/MergeQuery/", Mergequery).Methods("GET", "OPTIONS")
 
 	return r

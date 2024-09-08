@@ -13,6 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Not using login for now
 func Login(w http.ResponseWriter, r *http.Request) {
 	log.Println("Inside Login API")
 	var responseData structs.LoginResponse
@@ -107,6 +108,34 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
+func AddLikesDisLikes(w http.ResponseWriter, r *http.Request){
+	var likes, dislikes, requestId string
+	var l, d bool
+	likes = r.FormValue("likes")
+	dislikes = r.FormValue("disLikes")
+	requestId = r.FormValue("requestId")
+
+	if likes == "True"{
+		l = true
+	}
+
+	if dislikes == "True"{
+		d = true
+	}
+
+	newl, newd, err := database.UpdateLikesDislikes(l, d, requestId)
+	if err != nil {
+		go database.Logs("Error", err.Error())
+	}
+
+	var ld structs.LikesDisLikes
+
+	ld.Likes = newl
+	ld.DisLikes = newd
+
+	json.NewEncoder(w).Encode(ld)
+}
+
 func checkFineForOffence(offence []string)int{
 	fine := make(map[string]int)
 	fine["Overspeeding"] = 5000
@@ -140,6 +169,7 @@ func formatSlice(offence string)[]string{
 	return k
 }
 
+// Not using manual signup for now
 func SignUpUser(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	msg := "User Created successfully"
