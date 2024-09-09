@@ -18,7 +18,9 @@ func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.Soci
 				is_submitted_by_rto ,
 				total_fine ,
 				rto_approved,
-				submitted_at
+				submitted_at,
+				likes,
+				dislikes
 			from
 				report.public_report` 
 
@@ -31,8 +33,6 @@ func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.Soci
 			query += ` order by
 				RANDOM()
 				limit 10;`
-
-				log.Println(query)
 
 	rows, err := DB.Query(query)
 	if err != nil {
@@ -50,6 +50,8 @@ func FetchSocialFromDB(requestBy string) (structs.SocialResponse, []structs.Soci
 			&DBdata.TotalFine,
 			&DBdata.RTOApproved,
 			&DBdata.Submitted_at,
+			&DBdata.Likes,
+			&DBdata.DisLikes,
 		)
 		response = append(response, DBdata)
 		requestIdSlice = append(requestIdSlice, DBdata.RequestId)

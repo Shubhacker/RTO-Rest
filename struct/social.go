@@ -13,4 +13,6 @@ type SocialData struct {
 	TotalFine      int
 	RTOApproved    bool
 	Submitted_at string
+	Likes 		int
+	DisLikes 	int
 }
