@@ -18,3 +18,8 @@ type CommentData struct {
 type CommentResponse struct {
 	Comments []CommentData
 }
+
+type LikesDisLikes struct {
+	Likes int
+	DisLikes int
+}

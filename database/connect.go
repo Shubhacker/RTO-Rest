@@ -11,6 +11,7 @@ import (
 var DB *sql.DB
 var err error
 
+//  Need to move all creds to env variable
 const (
 	HOST     = "monorail.proxy.rlwy.net"
 	PORT     = 51633

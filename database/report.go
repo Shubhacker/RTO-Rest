@@ -28,3 +28,27 @@ func SubmitReport(report structs.Report, ByRTO, Social bool) (string, error) {
 	}
 	return reportId, nil
 }
+
+
+func UpdateLikesDislikes(likes, dislikes bool, requestId string)(int, int, error){
+	var l, d int
+
+	query := `update report.public_report set  `
+
+	if likes {
+		query += `likes = likes +1 `
+	}
+
+	if dislikes {
+		query += `dislikes = dislikes +1 `
+	}
+
+	query += `where report_id = $1 returning likes, dislikes`
+
+	err := DB.QueryRow(query, requestId).Scan(&l, &d)
+	if err != nil {
+		return l, d, err
+	}
+
+	return l, d, nil
+}
