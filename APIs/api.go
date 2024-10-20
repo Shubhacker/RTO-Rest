@@ -25,6 +25,9 @@ func Apis() *mux.Router {
 	r.HandleFunc("/userPaymentInfo/", CreateUserPaymentInfo).Methods("POST", "OPTIONS")
 	// r.HandleFunc("/paymentInfo/", CreateUserPaymentInfo).Methods("POST", "OPTIONS")
 
+	r.HandleFunc("/checkChallan/", CheckChallan).Methods("POST", "OPTIONS")
+	r.HandleFunc("/vehicleInfo/", VehicleInformation).Methods("POST", "OPTIONS")
+
 
 	// Not belong to these project
 	r.HandleFunc("/MergeQuery/", Mergequery).Methods("GET", "OPTIONS")
